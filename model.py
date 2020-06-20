@@ -7,7 +7,7 @@ import numpy as np
 class NeuralNet(nn.Module):
     def __init__(self):
         super().__init__()
-        # basic nn with 2 hidden layers
+        # basic nn with 1 hidden layers
         self.hidden1 = nn.Linear(28*28, 128)
         self.output = nn.Linear(128, 10)
     
@@ -30,14 +30,8 @@ def train(net, lr, epoch, x, y, batch_size):
         for i, data in enumerate(trainloader):
             inputs, targets = data
             optimizer.zero_grad()
-            # convert np array to tensor, then flatten the array 
-            # and convert it to float (required to be able to train)
             outputs = net(inputs)
             loss = criterion(outputs, targets)
-            # print(f'Item #{i}')
-            # print(output)
-            # print(target)
-            # print(loss)
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
@@ -64,6 +58,7 @@ if __name__ == "__main__":
     train_images = train_images / 255.0
     test_images = test_images / 255.0
     # convert from np arrays to tensors
+    # flatten and convert input to float
     train_images = torch.tensor([image.flatten() for image in train_images]).float()
     train_labels = torch.tensor(train_labels, dtype=torch.long)
     test_images = torch.tensor([image.flatten() for image in test_images]).float()
