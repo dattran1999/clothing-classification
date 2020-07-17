@@ -29,6 +29,7 @@ def train(net, lr, epoch, x, y, batch_size):
         print(f"Training epoch {e+1}")
         for i, data in enumerate(trainloader):
             inputs, targets = data
+            print(inputs.shape)
             optimizer.zero_grad()
             outputs = net(inputs)
             loss = criterion(outputs, targets)
@@ -66,7 +67,7 @@ if __name__ == "__main__":
 
     net = NeuralNet()
     print(net)
-    train(net, 0.001, 3, train_images[:], train_labels[:], 4)
+    train(net, 0.001, 3, train_images[:], train_labels[:], 10)
 
     num_correct = test(net, test_images, test_labels)
     print(f"Accuracy: {num_correct/len(test_labels) * 100}%")
